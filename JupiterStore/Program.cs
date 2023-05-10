@@ -10,7 +10,7 @@ builder.Services.AddDbContext<StoreDbContext>(opts =>
 {
     opts.UseSqlServer(builder.Configuration["ConnectionStrings:JupiterStoreConnection"]);
 });
-
+builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,6 +20,7 @@ var app = builder.Build();
 //}
 app.UseStaticFiles();
 app.MapDefaultControllerRoute();
+SeedData.EnsurePopulated(app);
 
 //app.UseRouting();
 
